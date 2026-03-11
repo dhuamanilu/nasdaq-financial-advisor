@@ -4,7 +4,7 @@ import requests
 from dotenv import load_dotenv
 from pinecone import Pinecone
 
-HF_API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/{model}"
+HF_API_URL = "https://router.huggingface.co/pipeline/feature-extraction/{model}"
 
 class PineconeService:
     def __init__(self, namespace=""):
