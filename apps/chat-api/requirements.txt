@@ -46,5 +46,6 @@ pydantic[email]==2.11.1
 
 # ===== VECTOR DATABASE =====
 pinecone==7.3.0
+sentence-transformers==2.2.2
 # huggingface-hub >= 0.14.0, < 0.26.0
 httpx>=0.25.0
