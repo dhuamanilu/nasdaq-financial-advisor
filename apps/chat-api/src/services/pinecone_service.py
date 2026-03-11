@@ -7,7 +7,7 @@ from pinecone import Pinecone
 HF_API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/{model}"
 
 class PineconeService:
-    def __init__(self, namespace="default"):
+    def __init__(self, namespace=""):
         load_dotenv()
         self.api_key = os.getenv("PINECONE_API_KEY")
         self.index_name = os.getenv("PINECONE_INDEX_NAME", "financial-docs")
