@@ -4,7 +4,7 @@ import requests
 from dotenv import load_dotenv
 from pinecone import Pinecone
 
-HF_API_URL = "https://router.huggingface.co/pipeline/feature-extraction/{model}"
+HF_API_URL = "https://router.huggingface.co/hf-inference/models/{model}"
 
 class PineconeService:
     def __init__(self, namespace=""):
@@ -16,13 +16,18 @@ class PineconeService:
         self.dense_index = self.pc.Index(self.index_name)
         self.model_name = os.getenv("HAYSTACK_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
         self.hf_url = HF_API_URL.format(model=self.model_name)
+        self.hf_token = os.getenv("HF_TOKEN", "")
 
     def _embed_query(self, text):
-        """Genera embedding usando la API gratuita de HuggingFace (mismo modelo del ETL)."""
+        """Genera embedding usando la API de HuggingFace (mismo modelo del ETL)."""
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.hf_token}"
+        }
         response = requests.post(
             self.hf_url,
             json={"inputs": text, "options": {"wait_for_model": True}},
-            headers={"Content-Type": "application/json"},
+            headers=headers,
             timeout=30
         )
         response.raise_for_status()
